@@ -18,6 +18,7 @@ set $right l
 # Your preferred terminal emulator
 set $term footclient
 
+# Keyboard
 input * {
     xkb_layout it 
 #    xkb_options caps:escape,grp:alt_caps_toggle
@@ -26,6 +27,7 @@ input * {
     repeat_rate 65
 }
 
+# Apple Trackpad
 input "type:touchpad" {
 	natural_scroll enable
 	scroll_factor 0.35
@@ -40,16 +42,20 @@ set $bg_animated ~/Pictures/WP/Animated/animated-1.gif
 set $lock_bg ~/Pictures/LK/dragon-ball-1.png
 set $lock_opts '--effect-pixelate 10 --indicator --ring-color 4C566A --key-hl-color 4C566A --line-color 2E3440 --separator-color 5E81AC'
 
-# Refresh and VRR
+# Refresh and VRR - Display Preferences
 output eDP-1 {
     scale 1.30
     pos 0 0
     res 2560x1440@60.000Hz
-    adaptive_sync yes
+    adaptive_sync no
 }
 
-## Background
+# Disable and enable the display when lid
+set $laptop_screen 'eDP-1'
+bindswitch --reload --locked lid:on output $laptop_screen disable
+bindswitch --reload --locked lid:off output $laptop_screen enable
 
+## Background
 # Static
 output * bg $bg fill
 
@@ -57,17 +63,16 @@ output * bg $bg fill
 # exec_always swww init
 # exec swww $bg_animated
 
+# Start the foot terminal server
 exec_always foot --server
 
-# App Launcher
+# App Launcher -> Wofi
 set $menu wofi --dmenu --show run
-# set $menu fuzzel --show-actions
-
-# Start WOB
 
 # Add alt tab
 bindsym $mod+tab workspace back_and_forth 
 
+# TODO: implements this
 # Add screenshot capability
 # Region-select-screenshot to file
 # bindsym ctrl+shift+Print exec grimshot --notify save area
@@ -174,11 +179,12 @@ exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
 set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
 exec_always rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
 
+# udiskie for to manage removable media
 exec udiskie
+
 # exec autotiling
 exec_always mako
 exec_always nm-applet --indicator
-# exec openrgb --startminimized --profile default
 
 #####################
 #####################

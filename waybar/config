@@ -3,9 +3,6 @@
     "position": "top", // Waybar position (top|bottom|left|right)
     "height": 40, // Waybar height (to be removed for auto height)
 
-    // Archived modules
-    // "custom/gpu", "bluetooth",  "custom/weather", "temperature", "sway/window"
-    // Choose the order of the modules
     "modules-left": [ 
 	"clock", 
 	"sway/language", 
@@ -22,8 +19,10 @@
 	//"temperature", -> TODO
 	//"custom/gpu",  -> TODO
 	"pulseaudio", 
-	//"bluetooth",   -> TODO
+	"bluetooth", 
 	"network", 
+	"backlight",
+	"battery",
 	"tray"
 	],
 
@@ -52,16 +51,16 @@
     },
 
     // TODO: no needed
-    // "bluetooth": {
-    //     "interval": 30,
-    //     "format": "{icon}",
-    //     // "format-alt": "{status}",
-    //     "format-icons": {
-    //         "enabled": "",
-    //         "disabled": ""
-    //     },
-    //     "on-click": "blueberry"
-    // },    
+    "bluetooth": {
+         "interval": 30,
+         "format": "{icon}",
+         // "format-alt": "{status}",
+         "format-icons": {
+             "enabled": "",
+             "disabled": ""
+         },
+         "on-click": "blueberry"
+     },    
 
     "sway/language": {
         "format": "<big></big> {}",
@@ -75,6 +74,25 @@
             "deactivated": "<big></big>"
         },
         "tooltip": "true"
+    },
+    "backlight": {
+        "format": "{percent}% {icon}",
+        "format-icons": ["", ""]
+    },
+    "battery": {
+        "bat": "macsmc-battery",
+        "states": {
+            // "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-alt": "{time} {icon}",
+        // "format-good": "",
+        "format-full": "100% ",
+        "format-icons": ["", "", "", "", ""]
     },
     "tray": {
         //"icon-size": 11,
